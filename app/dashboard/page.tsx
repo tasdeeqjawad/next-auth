@@ -7,7 +7,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 //import {SignOutButton} from "@/components/signoutButton"
 
-const geistSans = Geist({
+const geistSans = Geist({ //next default font
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
