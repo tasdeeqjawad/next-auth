@@ -1,3 +1,4 @@
+// @refresh reset
 'use server'
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
@@ -5,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const secretKey = "secret";
 const key = new TextEncoder().encode(secretKey);
-
+                                                     
 export async function encrypt(payload: any) {
   return await new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
@@ -21,6 +22,9 @@ export async function decrypt(input: string): Promise<any> {
   return payload;
 }
 
+  // ✅ Ensure `cookies().set()` is used correctly
+export const cookieStore = cookies(); // Awaiting is not needed here
+
 export async function login(formData: FormData) {
   const user = { 
     email: formData.get("email"), 
@@ -31,7 +35,7 @@ export async function login(formData: FormData) {
   const session = await encrypt({ user, expires });
 
   // ✅ Ensure `cookies().set()` is used correctly
-  const cookieStore = cookies(); // Awaiting is not needed here
+  //const cookieStore = cookies(); // Awaiting is not needed here
   (await cookieStore).set("session", session, { 
     expires, 
     httpOnly: true, 

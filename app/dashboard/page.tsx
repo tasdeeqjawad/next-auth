@@ -64,6 +64,8 @@ export default function Dashboard() {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
+    await signOut({ callbackUrl: "/" });
+    window.location.href = "/";
     router.push("/");
   };
 
@@ -72,6 +74,7 @@ export default function Dashboard() {
   };
 
   return (
+    
     <div className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8 justify-center items-center`}>
       <button
         onClick={handleSignOut}

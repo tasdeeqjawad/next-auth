@@ -4,12 +4,12 @@ import type { NextRequest } from "next/server";
 
 export async function middleware(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-
   console.log("Middleware: Token ->", token);
 
   if (req.nextUrl.pathname === "/" || req.nextUrl.pathname.startsWith("/api")) {
     return NextResponse.next();
-  }
+  } 
+
 
   if (!token) {
     console.log("Middleware: No token found. Redirecting to /");
@@ -23,3 +23,5 @@ export async function middleware(req: NextRequest) {
 export const config = {
   matcher: ["/dashboard/:path*", "/profile/:path*"],
 };
+
+
