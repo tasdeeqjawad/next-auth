@@ -1,21 +1,15 @@
-"use client"
+"use client";
 
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import swal from "sweetalert";
 
-
-
-interface CredentialsFormProps {
-  csrfToken?: string;
-}
-
-export function CredentialsForm(props: CredentialsFormProps) {
+export function CredentialsForm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
 
@@ -25,28 +19,13 @@ export function CredentialsForm(props: CredentialsFormProps) {
       redirect: false,
     });
 
+    console.log("SignIn Response:", signInResponse);
+
     if (signInResponse && !signInResponse.error) {
-      //swal(`Login successful`);
-      //login (data);
-      //redirect("/dashboard");
-      //router.push("/dashboard");
-      // Call the API route instead of directly calling login()
-      const res = await fetch("/api/login", {
-        method: "POST",
-        body: data,
-      });
-      if (res.ok) {
-        router.push("/dashboard");
-      } else {
-        swal("Session creation failed!");
-      }
-      
-    } 
-    else {
-      console.log("Error: ", signInResponse);
+      router.push("/dashboard");
+    } else {
       setError("Your Email or Password is wrong!");
       swal("Your Email or Password is wrong!");
-      
     }
   };
 
@@ -55,7 +34,7 @@ export function CredentialsForm(props: CredentialsFormProps) {
       className="bg-black w-full mt-8 text-xl text-black font-semibold flex flex-col"
       onSubmit={handleSubmit}
     >
-      { error && (
+      {error && (
         <span className="p-4 mb-2 text-lg font-semibold text-white bg-red-500 rounded-md">
           {error}
         </span>
@@ -67,7 +46,6 @@ export function CredentialsForm(props: CredentialsFormProps) {
         required
         className="w-full px-4 py-4 mb-4 border border-gray-300 rounded-md"
       />
-
       <input
         type="password"
         name="password"
@@ -75,7 +53,6 @@ export function CredentialsForm(props: CredentialsFormProps) {
         required
         className="w-full px-4 py-4 mb-4 border border-gray-300 rounded-md"
       />
-
       <button
         type="submit"
         className="w-full h-12 px-6 mt-4 text-lg text-white transition-colors duration-150 bg-blue-600 rounded-lg focus:shadow-outline hover:bg-blue-700"
