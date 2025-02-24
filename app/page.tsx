@@ -14,7 +14,7 @@ export default async function SignInPage() {
       <div className="bg-black flex flex-col rounded-lg items-center w-1/3 mt-10 p-10 shadow-md">
         <h1 className="mt-10 mb-4 text-4xl font-bold">Sign In</h1>
         <GoogleSignInButton />
-        <GithubSignInButton />
+        <GithubSignInButton /> 
         <span className="text-2xl font-semibold text-white text-center mt-8">
           Or
         </span>

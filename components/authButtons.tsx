@@ -5,7 +5,7 @@ import googleLogo from "@/public/google.png";
 import githubLogo from "@/public/github.png";
 import { signIn } from "next-auth/react";
 
-export function GoogleSignInButton() {/*
+export function GoogleSignInButton() {
   const handleClick = () => {
     signIn("google");
   };
@@ -19,9 +19,9 @@ export function GoogleSignInButton() {/*
       <span className="ml-4">Continue with Google</span>
     </button>
   );
-*/}
+}
 
-export function GithubSignInButton() {/*
+export function GithubSignInButton() {
   const handleClick = () => {
     signIn("github");
   };
@@ -35,7 +35,7 @@ export function GithubSignInButton() {/*
       <span className="ml-4">Continue with Github</span>
     </button>
   );
-*/}
+}
 
 export function CredentialsSignInButton() {
   const handleClick = () => {
