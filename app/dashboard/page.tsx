@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import swal from "sweetalert";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { People, columns } from "./columns"
+import { DataTable } from "./data-table"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
