@@ -6,6 +6,7 @@ import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { People, columns } from "./columns"
 import { DataTable } from "./data-table"
+import React from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -77,14 +78,14 @@ export default function Dashboard() {
 
   return (
     
-    <div className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8 justify-center items-center`}>
-      <button
+    <div className={`${geistSans.variable} ${geistMono.variable} table-auto flex flex-col min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8 justify-center items-center`}>
+      {/* <button
         onClick={handleSignOut}
         className="bg-red-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full items-end shadow-md hover:scale-105 transition-transform text-xs sm:text-sm ml-2"
       >
         Sign Out
       </button>
-      <header className="flex flex-col items-center gap-4 mb-12">
+       <header className="flex flex-col items-center gap-4 mb-12">
         <h1 className="text-3xl font-bold text-gray-800 sm:text-4xl">User Management</h1>
       </header>
       <main className="flex flex-col gap-8 w-full max-w-2xl mx-auto">
@@ -115,8 +116,10 @@ export default function Dashboard() {
               </button>
             </div>
           ))}
-        </div>
-      </main>
+        </div>  */}
+        <DataTable columns={columns} data={users} /> 
+
+       {/* </main>
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
@@ -158,7 +161,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-      )}
+      )}  */}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import { string } from "zod"
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -32,6 +33,11 @@ export const columns: ColumnDef<People>[] = [
   },
   {
     accessorKey: "password",
-     header: "Password",
+    header: "Password",
+    cell: ({ row }) => {
+      const password = String(row.getValue("password"))
+      const formatted = password.toWellFormed()
+      return <div className="text-right font-medium">{formatted}</div>
+    },
   },
 ]
