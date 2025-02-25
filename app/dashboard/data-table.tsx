@@ -5,6 +5,7 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getPaginationRowModel
 } from "@tanstack/react-table"
 
 import {
@@ -15,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { Button } from "@/components/ui/button"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -29,11 +31,14 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
   })
 
   return (
-    <div className="  rounded-md border">
-      <Table>
+    <>
+    {/* Table */}
+    <div className=" bg-white border-separate border-spacing-x-4 border-blue-400 rounded-md border-4 hover:border-blue-500 shadow-xl pt-px-4">
+      <Table className="table-none font-bold md:table-fixed text-xl text-black text-justify min-w-10 ">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
@@ -76,5 +81,27 @@ export function DataTable<TData, TValue>({
         </TableBody>
       </Table>
     </div>
+    {/* Pagination */}
+    <div className="flex items-center justify-center space-x-6 py-10">
+        <Button 
+          variant="outline"
+          size="lg"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+          
+        >
+          Previous
+        </Button>
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Next
+        </Button>
+      </div>
+    
+    </>
   )
 }

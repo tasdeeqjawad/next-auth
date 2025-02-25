@@ -78,7 +78,69 @@ export default function Dashboard() {
 
   return (
     
-    <div className={`${geistSans.variable} ${geistMono.variable} table-auto flex flex-col min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-8 justify-center items-center`}>
+    <div className={`${geistSans.variable} ${geistMono.variable} table-auto flex flex-col min-h-screen px-4 sm:px-6 lg:px-8 justify-center items-center bg-blue-400`}>
+      
+      <header className="flex flex-col items-center gap-4 mb-12">
+        <h1 className="text-6xl font-bold text-gray-200 ">User Management</h1>
+      </header>
+      <main >
+        <button
+          onClick={handleSignOut}
+          className="bg-red-600 text-white text-lg px-2 lg:px-6 lg:py-4 rounded-full items-end shadow-md hover:scale-105 transition-transform font-bold sm:text-lg ml-2 py-8 fixed top-3 right-3 left-15"
+        >
+          Sign Out
+        </button>
+
+        <button
+          onClick={() => setShowModal(true)}
+          className="bg-green-500 text-white text-3xl font-bold px-6 py-3 rounded-full  border-spacing-2 border-green-700 fixed top-3 right-15 left-3 hover:scale-105"
+        >
+          Add User
+        </button>
+        <DataTable columns={columns} data={users} /> 
+      </main> 
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+            <h2 className="text-lg text-blue-700 font-bold mb-4">Add New User</h2>
+            <input
+              type="text"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              className="w-full border p-2 text-purple-800 rounded-lg mb-4"
+              placeholder="Enter name"
+            />
+            <input
+              type="email"
+              value={newEmail}
+              onChange={(e) => setNewEmail(e.target.value)}
+              className="w-full border p-2 text-purple-800 rounded-lg mb-4"
+              placeholder="Enter email"
+            />
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="w-full border p-2 text-purple-800 rounded-lg mb-4"
+              placeholder="Enter password"
+            />
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowModal(false)}
+                className="bg-gray-400 text-white px-4 py-2 rounded-lg mr-2"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleAddUser}
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )} 
       {/* <button
         onClick={handleSignOut}
         className="bg-red-600 text-white px-2 py-1 sm:px-3 sm:py-1 rounded-full items-end shadow-md hover:scale-105 transition-transform text-xs sm:text-sm ml-2"
@@ -117,7 +179,7 @@ export default function Dashboard() {
             </div>
           ))}
         </div>  */}
-        <DataTable columns={columns} data={users} /> 
+      
 
        {/* </main>
       {showModal && (
