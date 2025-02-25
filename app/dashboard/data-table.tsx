@@ -5,6 +5,7 @@ import {
   flexRender,
   getCoreRowModel,
   SortingState,
+  VisibilityState,
   useReactTable,
   getPaginationRowModel,
   getSortedRowModel,
@@ -24,6 +25,12 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -38,6 +45,9 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )  // column filters state
+
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({})
   const table = useReactTable({
     data,
     columns,
@@ -47,25 +57,59 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
     state: {
       sorting,
-      columnFilters,}, 
+      columnFilters,
+      columnVisibility,}, 
   })
 
   return (
     
     <>
-    {/* Filter search */}
-    <div className="flex items-center py-4 ">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm bg-white"
-        />
-    </div>
+    <div className="flex items-center justify-between space-x-6 py-5 ">
+      {/* Filter search */}
+      <div className="flex items-center py-4 ">
+          <Input
+            placeholder="Filter emails..."
+            value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("email")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm bg-white font-bold text-black"
+          />
+      
+      {/* Columns dropdown */}
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="ml-auto font-bold ">
+                Columns
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start">
+              {table
+                .getAllColumns()
+                .filter(
+                  (column) => column.getCanHide()
+                )
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize font-bold"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  )
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+      </div> 
+    </div>   
     {/* Table */}
     <div className=" bg-white border-separate border-spacing-x-4 border-blue-400 rounded-md border-4 hover:border-blue-500 shadow-xl pt-px-4">
       <Table className="table-none font-bold md:table-fixed text-xl text-black text-justify min-w-10 ">
