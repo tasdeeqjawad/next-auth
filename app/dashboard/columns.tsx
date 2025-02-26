@@ -1,13 +1,11 @@
-"use client"
+"use client";
 
-import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown } from "lucide-react"
-import { string } from "zod"
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
+import { string } from "zod";
 import swal from "sweetalert";
-//imports for other components
-import { MoreHorizontal } from "lucide-react"
- 
-import { Button } from "@/components/ui/button"
+import { MoreHorizontal } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,44 +13,34 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type People= {
-  id: number
-//   amount: number
-  name: string
-//   status: "pending" | "processing" | "success" | "failed"
-  email: string
-  password: string
-}
+export type People = {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+};
 
 export const columns: ColumnDef<People>[] = [
-
-  
-//   {
-//     accessorKey: "status",
-//     header: "Status",
-//   },
-    {
-        accessorKey: "id",
-        header: "ID",
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
+  {
+    accessorKey: "name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
     },
-    {
-        accessorKey: "name",
-        header: ({ column }) => {
-          return (
-            <Button
-              variant="ghost"
-              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-              Name
-              <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-          )
-        },
-    },
+  },
   {
     accessorKey: "email",
     header: ({ column }) => {
@@ -65,25 +53,25 @@ export const columns: ColumnDef<People>[] = [
           Email
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
   },
   {
     accessorKey: "password",
     header: "Password",
     cell: ({ row }) => {
-      const password = String(row.getValue("password"))
-      const formatted = password.toWellFormed()
-      return <div className="text-left text-blue-800 font-medium">{formatted}</div>
+      const password = String(row.getValue("password"));
+      const formatted = password.toWellFormed();
+      return <div className="text-left text-blue-800 font-medium">{formatted}</div>;
     },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const user = row.original
- 
+      const user = row.original;
+
       return (
-        <DropdownMenu >
+        <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
               <span className="sr-only">Open menu</span>
@@ -99,30 +87,29 @@ export const columns: ColumnDef<People>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem
-            onClick={() => alert(`Delete user ${user.name}`)}
-            >
-              Delete</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => alert(`Delete user ${user.name}`)}>
+              Delete
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      )
+      );
     },
   },
+  // CHANGED: Updated delete column to use onDelete from table meta
   {
     id: "delete",
-    cell: ({ row }) => {
-      const user = row.original
- 
+    cell: ({ row, table }) => {
+      const user = row.original;
+      const onDelete = (table.options.meta as any)?.onDelete; // CHANGED: Access onDelete from meta
       return (
         <Button
           variant="ghost"
-          // onClick={() => alert(`Delete user ${user.name}`)}
+          onClick={() => onDelete?.(user)} // CHANGED: Call onDelete with user
           className="bg-orange-700 text-lg font-bold text-white"
         >
           Delete
         </Button>
-      )
+      );
     },
   },
-
-]
+];
