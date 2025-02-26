@@ -87,9 +87,7 @@ export const columns: ColumnDef<People>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem onClick={() => alert(`Delete user ${user.name}`)}>
-              Delete
-            </DropdownMenuItem>
+            
           </DropdownMenuContent>
         </DropdownMenu>
       );
