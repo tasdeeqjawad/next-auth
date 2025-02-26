@@ -102,7 +102,7 @@ export default function Dashboard() {
 
   // CHANGED: Simplified handleSignOut by removing redundant calls
   const handleSignOut = async () => {
-    
+    await signOut({ redirect: false });
     await signOut({ callbackUrl: "/" });
     window.location.href = "/";
     router.push("/");
@@ -117,7 +117,7 @@ export default function Dashboard() {
       className={`${geistSans.variable} ${geistMono.variable} table-auto flex flex-col min-h-screen px-4 sm:px-6 lg:px-8 justify-center items-center bg-blue-400`}
     >
       <header className="flex flex-col items-center gap-4 mb-12">
-        <h1 className="text-6xl font-bold text-gray-200">User Management</h1>
+        <h1 className="text-6xl font-bold text-gray-200 justify-evenly">User Management</h1>
       </header>
       <main>
         <button
