@@ -55,7 +55,7 @@ export function CredentialsForm() {
       />
       <button
         type="submit"
-        className="w-full h-10 sm:h-12 px-6 mt-4 text-base sm:text-lg text-white transition-colors duration-150 bg-blue-600 rounded-lg focus:shadow-outline hover:bg-blue-700"
+        className="w-full h-10 sm:h-12 px-6 mt-4 text-base sm:text-lg text-black transition-colors duration-150 bg-gray-100 rounded-lg focus:shadow-outline hover:bg-blue-500 hover:text-white"
       >
         Log in
       </button>

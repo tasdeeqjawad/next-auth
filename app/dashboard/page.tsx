@@ -114,34 +114,34 @@ export default function Dashboard() {
 
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen px-4 sm:px-6 lg:px-8 justify-center items-center bg-blue-400`}
+      className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen px-4 sm:px-6 lg:px-8 justify-center items-center bg-white bg-opacity-90`}
     >
       <header className="flex flex-col items-center gap-4 mb-6 sm:mb-12">
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-200 text-center">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-black text-center">
           User Management
         </h1>
       </header>
       <main className="w-full max-w-4xl">
         <button
           onClick={handleSignOut}
-          className="bg-red-600 text-white text-sm sm:text-lg px-4 sm:px-6 py-2 sm:py-4 rounded-full shadow-md hover:scale-105 transition-transform font-bold fixed top-3 right-3"
+          className="bg-white text-black text-sm sm:text-lg px-4 sm:px-6 py-2 sm:py-4 rounded-full shadow-md hover:scale-105 transition-transform font-bold fixed top-3 right-3  hover:bg-red-500  hover:text-white"
         >
           Sign Out
         </button>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-green-500 text-white text-xl sm:text-3xl font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-full border-green-700 fixed top-3 left-3 hover:scale-105 transition-transform"
+          className="bg-white text-black text-xl sm:text-3xl font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-full border-green-700 fixed top-3 left-3 hover:scale-105 transition-transform  hover:bg-green-500  hover:text-white  shadow-xl"
         >
           Add User
         </button>
         {/* CHANGED: Added onDelete prop to pass handleDelete to DataTable */}
-        <div className="mt-16 sm:mt-20">
+        <div className="mt-16 sm:mt-20  ">
           <DataTable columns={columns} data={users} onDelete={handleDelete} />
         </div>
       </main>
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-4">
-          <div className="bg-white p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm">
+          <div className="bg-gray-100 p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm">
             <h2 className="text-base sm:text-lg text-blue-700 font-bold mb-4 text-center">
               Add New User
             </h2>

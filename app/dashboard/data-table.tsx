@@ -69,22 +69,22 @@ export function DataTable<TData, TValue>({
             onChange={(event) =>
               table.getColumn("email")?.setFilterValue(event.target.value)
             }
-            className="w-full sm:max-w-sm bg-white font-bold text-black text-xs sm:text-sm"
+            className="w-full sm:max-w-sm bg-white font-bold text-black text-xs sm:text-sm shadow-lg"
           />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="font-bold text-xs sm:text-sm">
+              <Button variant="outline" className="font-bold text-xs sm:text-sm shadow-xl">
                 Columns
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="text-xs sm:text-sm">
+            <DropdownMenuContent align="start" className="text-xs sm:text-sm shadow-xl   ">
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
                 .map((column) => (
                   <DropdownMenuCheckboxItem
                     key={column.id}
-                    className="capitalize font-bold"
+                    className="capitalize font-bold  shadow-xl  "
                     checked={column.getIsVisible()}
                     onCheckedChange={(value) => column.toggleVisibility(!!value)}
                   >
@@ -95,7 +95,7 @@ export function DataTable<TData, TValue>({
           </DropdownMenu>
         </div>
       </div>
-      <div className="bg-white border-separate border-spacing-x-2 sm:border-spacing-x-4 border-blue-400 rounded-md border-4 hover:border-blue-500 shadow-xl pt-px-4">
+      <div className="bg-white border-separate border-spacing-x-2 sm:border-spacing-x-4 border-gray-50 rounded-md border-4 hover:border-gray-100 shadow-2xl pt-px-4">
         <Table className="font-bold text-xs sm:text-sm md:text-xl text-black text-justify min-w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

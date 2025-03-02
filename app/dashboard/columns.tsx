@@ -73,7 +73,7 @@ export const columns: ColumnDef<People>[] = [
       const password = String(row.getValue("password"));
       const formatted = password.toWellFormed();
       return (
-        <div className="text-left text-blue-800 font-medium text-xs sm:text-sm truncate">
+        <div className="text-left text-black font-medium text-xs sm:text-sm truncate">
           {formatted}
         </div>
       );
