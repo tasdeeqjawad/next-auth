@@ -114,68 +114,70 @@ export default function Dashboard() {
 
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen px-4 sm:px-6 lg:px-8 justify-center items-center bg-white bg-opacity-90`}
+      className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-screen px-6 sm:px-8 lg:px-12 items-center bg-white bg-opacity-90`}
     >
-      <header className="flex flex-col items-center gap-4 mb-6 sm:mb-12">
-        <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-black text-center">
-          User Management
-        </h1>
-      </header>
-      <main className="w-full max-w-4xl">
-        <button
-          onClick={handleSignOut}
-          className="bg-white text-black text-sm sm:text-lg px-4 sm:px-6 py-2 sm:py-4 rounded-full shadow-md hover:scale-105 transition-transform font-bold fixed top-3 right-3  hover:bg-red-500  hover:text-white"
-        >
-          Sign Out
-        </button>
-        <button
-          onClick={() => setShowModal(true)}
-          className="bg-white text-black text-xl sm:text-3xl font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-full border-green-700 fixed top-3 left-3 hover:scale-105 transition-transform  hover:bg-green-500  hover:text-white  shadow-xl"
-        >
-          Add User
-        </button>
-        {/* CHANGED: Added onDelete prop to pass handleDelete to DataTable */}
-        <div className="mt-16 sm:mt-20  ">
-          <DataTable columns={columns} data={users} onDelete={handleDelete} />
+      <div className="w-full max-w-6xl flex flex-col items-center">
+        <header className="w-full flex flex-row justify-between items-center mt-8 sm:mt-10">
+          <button
+            onClick={() => setShowModal(true)}
+            className="bg-white text-black text-base sm:text-xl font-bold h-12 sm:h-14 w-36 sm:w-40 px-6 py-3 rounded-full border-green-700 hover:scale-105 transition-transform hover:bg-green-500 hover:text-white shadow-xl"
+          >
+            Add User
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="bg-white text-black text-base sm:text-xl font-bold h-12 sm:h-14 w-36 sm:w-40 px-6 py-3 rounded-full shadow-md hover:scale-105 transition-transform hover:bg-red-500 hover:text-white"
+          >
+            Sign Out
+          </button>
+        </header>
+        <div className="flex flex-col items-center gap-8 sm:gap-10 mt-8 sm:mt-10 mb-8 sm:mb-12 w-full">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold text-black text-center">
+            User Management
+          </h1>
+          {/* CHANGED: Added onDelete prop to pass handleDelete to DataTable */}
+          <div className="w-full">
+            <DataTable columns={columns} data={users} onDelete={handleDelete} />
+          </div>
         </div>
-      </main>
+      </div>
       {showModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-4">
-          <div className="bg-gray-100 p-4 sm:p-6 rounded-lg shadow-lg w-full max-w-xs sm:max-w-sm">
-            <h2 className="text-base sm:text-lg text-blue-700 font-bold mb-4 text-center">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 px-6">
+          <div className="bg-gray-100 p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-sm sm:max-w-md">
+            <h2 className="text-lg sm:text-xl text-blue-700 font-bold mb-6 text-center">
               Add New User
             </h2>
             <input
               type="text"
               value={newName}
               onChange={(e) => setNewName(e.target.value)}
-              className="w-full border p-2 text-purple-800 rounded-lg mb-4 text-sm sm:text-base"
+              className="w-full border p-3 text-purple-800 rounded-lg mb-6 text-base sm:text-lg"
               placeholder="Enter name"
             />
             <input
               type="email"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
-              className="w-full border p-2 text-purple-800 rounded-lg mb-4 text-sm sm:text-base"
+              className="w-full border p-3 text-purple-800 rounded-lg mb-6 text-base sm:text-lg"
               placeholder="Enter email"
             />
             <input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              className="w-full border p-2 text-purple-800 rounded-lg mb-4 text-sm sm:text-base"
+              className="w-full border p-3 text-purple-800 rounded-lg mb-6 text-base sm:text-lg"
               placeholder="Enter password"
             />
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowModal(false)}
-                className="bg-gray-400 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg text-sm sm:text-base"
+                className="bg-gray-400 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-base sm:text-lg"
               >
                 Cancel
               </button>
               <button
                 onClick={handleAddUser}
-                className="bg-blue-500 text-white px-3 sm:px-4 py-1 sm:py-2 rounded-lg text-sm sm:text-base"
+                className="bg-blue-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-base sm:text-lg"
               >
                 Save
               </button>

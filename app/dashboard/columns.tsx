@@ -115,7 +115,7 @@ export const columns: ColumnDef<People>[] = [
         <Button
           variant="ghost"
           onClick={() => onDelete?.(user)}
-          className="bg-orange-700 text-base sm:text-lg font-bold text-white h-7 sm:h-8 px-2 sm:px-3"
+          className="bg-black text-base sm:text-lg font-bold text-white h-7 sm:h-8 px-2 sm:px-3 hover:bg-red-500 hover:text-white"
         >
           Delete
         </Button>
