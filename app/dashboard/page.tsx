@@ -103,6 +103,8 @@ export default function Dashboard() {
   // CHANGED: Simplified handleSignOut by removing redundant calls
   const handleSignOut = async () => {
     await signOut({ redirect: false });
+    await signOut({ callbackUrl: "/" });
+    window.location.href = "/";
     router.push("/");
   };
 
