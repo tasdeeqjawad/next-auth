@@ -30,22 +30,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-// CHANGED: Added onDelete to interface
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  onDelete?: (user: TData) => void; // CHANGED: Added optional onDelete prop
+  onDelete?: (user: TData) => void;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  onDelete, // CHANGED: Added onDelete to destructured props
+  onDelete,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
-  
+
   const table = useReactTable({
     data,
     columns,
@@ -57,61 +56,57 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     state: { sorting, columnFilters, columnVisibility },
-    meta: { onDelete }, // CHANGED: Added meta to pass onDelete to columns
+    meta: { onDelete },
   });
 
   return (
     <>
-      <div className="flex items-center justify-between space-x-6 py-5">
-        <div className="flex items-center py-4">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-5">
+        <div className="flex items-center gap-2 w-full sm:w-auto py-4">
           <Input
             placeholder="Filter emails..."
             value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("email")?.setFilterValue(event.target.value)
             }
-            className="max-w-sm bg-white font-bold text-black"
+            className="w-full sm:max-w-sm bg-white font-bold text-black text-xs sm:text-sm"
           />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto font-bold">
+              <Button variant="outline" className="font-bold text-xs sm:text-sm">
                 Columns
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="start">
+            <DropdownMenuContent align="start" className="text-xs sm:text-sm">
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize font-bold"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) => column.toggleVisibility(!!value)}
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
+                .map((column) => (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize font-bold"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                ))}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
-      <div className="bg-white border-separate border-spacing-x-4 border-blue-400 rounded-md border-4 hover:border-blue-500 shadow-xl pt-px-4">
-        <Table className="table-none font-bold md:table-fixed text-xl text-black text-justify min-w-10">
+      <div className="bg-white border-separate border-spacing-x-2 sm:border-spacing-x-4 border-blue-400 rounded-md border-4 hover:border-blue-500 shadow-xl pt-px-4">
+        <Table className="font-bold text-xs sm:text-sm md:text-xl text-black text-justify min-w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id} className="text-xs sm:text-sm md:text-base">
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
@@ -120,7 +115,7 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="text-xs sm:text-sm md:text-base">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
@@ -128,7 +123,7 @@ export function DataTable<TData, TValue>({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell colSpan={columns.length} className="h-24 text-center text-xs sm:text-sm">
                   No results.
                 </TableCell>
               </TableRow>
@@ -136,22 +131,22 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className="flex items-center justify-center space-x-6 py-10">
+      <div className="flex items-center justify-center gap-4 py-6 sm:py-10">
         <Button
           variant="outline"
-          size="lg"
+          size="sm"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
-          className="bg-purple-500 text-white text-lg border-x-white"
+          className="bg-purple-500 text-white text-xs sm:text-lg border-x-white h-8 sm:h-10"
         >
           Previous
         </Button>
         <Button
           variant="outline"
-          size="lg"
+          size="sm"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          className="bg-purple-500 text-white text-lg border-x-white"
+          className="bg-purple-500 text-white text-xs sm:text-lg border-x-white h-8 sm:h-10"
         >
           Next
         </Button>

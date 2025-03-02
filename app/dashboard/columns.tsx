@@ -1,10 +1,8 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
-import { string } from "zod";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import swal from "sweetalert";
-import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -25,16 +23,17 @@ export type People = {
 export const columns: ColumnDef<People>[] = [
   {
     accessorKey: "id",
-    header: ({column}) =>{
+    header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-1 sm:p-2 text-xs sm:text-sm"
         >
           ID
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-1 sm:ml-2 h-3 sm:h-4 w-3 sm:w-4" />
         </Button>
-      )
+      );
     },
   },
   {
@@ -44,9 +43,10 @@ export const columns: ColumnDef<People>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className="p-1 sm:p-2 text-xs sm:text-sm"
         >
           Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-1 sm:ml-2 h-3 sm:h-4 w-3 sm:w-4" />
         </Button>
       );
     },
@@ -58,10 +58,10 @@ export const columns: ColumnDef<People>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className="items-bold"
+          className="p-1 sm:p-2 text-xs sm:text-sm font-bold"
         >
           Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-1 sm:ml-2 h-3 sm:h-4 w-3 sm:w-4" />
         </Button>
       );
     },
@@ -72,7 +72,11 @@ export const columns: ColumnDef<People>[] = [
     cell: ({ row }) => {
       const password = String(row.getValue("password"));
       const formatted = password.toWellFormed();
-      return <div className="text-left text-blue-800 font-medium">{formatted}</div>;
+      return (
+        <div className="text-left text-blue-800 font-medium text-xs sm:text-sm truncate">
+          {formatted}
+        </div>
+      );
     },
   },
   {
@@ -83,12 +87,12 @@ export const columns: ColumnDef<People>[] = [
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+            <Button variant="ghost" className="h-7 sm:h-8 w-7 sm:w-8 p-0">
               <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
+              <MoreHorizontal className="h-3 sm:h-4 w-3 sm:w-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="text-xs sm:text-sm">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(user.id.toString())}
@@ -97,23 +101,21 @@ export const columns: ColumnDef<People>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>View customer</DropdownMenuItem>
-            
           </DropdownMenuContent>
         </DropdownMenu>
       );
     },
   },
-  // CHANGED: Updated delete column to use onDelete from table meta
   {
     id: "delete",
     cell: ({ row, table }) => {
       const user = row.original;
-      const onDelete = (table.options.meta as any)?.onDelete; // CHANGED: Access onDelete from meta
+      const onDelete = (table.options.meta as any)?.onDelete;
       return (
         <Button
           variant="ghost"
-          onClick={() => onDelete?.(user)} // CHANGED: Call onDelete with user
-          className="bg-orange-700 text-lg font-bold text-white"
+          onClick={() => onDelete?.(user)}
+          className="bg-orange-700 text-base sm:text-lg font-bold text-white h-7 sm:h-8 px-2 sm:px-3"
         >
           Delete
         </Button>
